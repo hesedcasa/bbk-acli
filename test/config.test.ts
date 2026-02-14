@@ -60,7 +60,7 @@ describe('config', () => {
     it('reads config with all required fields', async () => {
       const testConfig = {
         auth: {
-          apiToken: 'my-app-password',
+          apiToken: 'my-token',
           email: 'user@example.com',
           host: 'https://bitbucket.org',
         },

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**bb-acli** is an Oclif-based CLI tool for interacting with the Bitbucket Cloud REST API v2. It provides comprehensive access to Bitbucket functionality including repositories, pull requests, pipelines, and workspaces.
+**bbk-acli** is an Oclif-based CLI tool for interacting with the Bitbucket Cloud REST API v2. It provides comprehensive access to Bitbucket functionality including repositories, pull requests, pipelines, and workspaces.
 
 ## Development Commands
 
@@ -121,13 +121,13 @@ export default class RepoGet extends Command {
 
 ## Configuration
 
-Authentication config is stored in JSON at `~/.config/bb-acli/config.json` (platform-dependent):
+Authentication config is stored in JSON at `~/.config/bbk-acli/config.json` (platform-dependent):
 
 ```json
 {
   "auth": {
     "email": "user@example.com",
-    "apiToken": "app-password",
+    "apiToken": "token",
   }
 }
 ```
@@ -163,7 +163,7 @@ Authentication config is stored in JSON at `~/.config/bb-acli/config.json` (plat
 - Pre-commit hook runs format and dead code detection
 - Uses `shx` for cross-platform shell commands
 - Node.js >=18.0.0 required
-- Published as npm package `bb-acli`
+- Published as npm package `bbk-acli`
 
 ## Commit Message Convention
 
