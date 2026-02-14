@@ -74,6 +74,21 @@ describe('config', () => {
       expect(result).to.deep.equal(testConfig)
     })
 
+    it('logs actual error message for non-ENOENT errors', async () => {
+      // Make the config file unreadable by writing invalid content that causes a non-ENOENT error
+      await fs.writeFile(testConfigPath, 'invalid json content {')
+
+      const logMessages: string[] = []
+      const result = await readConfig(testConfigDir, (msg) => logMessages.push(msg))
+
+      expect(result).to.be.undefined
+      expect(logMessages).to.have.lengthOf(1)
+      // Should NOT say "Missing authentication config" since it's not a file-not-found error
+      expect(logMessages[0]).to.not.include('Missing authentication config')
+      // Should contain the actual JSON parse error message
+      expect(logMessages[0].length).to.be.greaterThan(0)
+    })
+
     it('handles config with additional fields', async () => {
       const testConfig = {
         auth: {
