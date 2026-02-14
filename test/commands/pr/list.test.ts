@@ -1,7 +1,95 @@
 import {expect} from 'chai'
+import esmock from 'esmock'
+import sinon from 'sinon'
 
 describe('pr:list', () => {
-  it('runs pr:list cmd', async () => {
-    expect(true)
+  let PrList: any
+  let readConfigStub: sinon.SinonStub
+  let listPullRequestsStub: sinon.SinonStub
+  let clearClientsStub: sinon.SinonStub
+  let formatAsToonStub: sinon.SinonStub
+
+  const mockConfig = {
+    auth: {
+      apiToken: 'test-token',
+      email: 'test@example.com',
+      host: 'https://bitbucket.org',
+    },
+  }
+
+  const mockResult = {data: {values: [{id: 1}, {id: 2}]}, success: true}
+
+  beforeEach(async () => {
+    readConfigStub = sinon.stub().resolves(mockConfig)
+    listPullRequestsStub = sinon.stub().resolves(mockResult)
+    clearClientsStub = sinon.stub()
+    formatAsToonStub = sinon.stub().returns('toon-output')
+
+    const imported = await esmock('../../../src/commands/pr/list.js', {
+      '../../../src/config.js': {readConfig: readConfigStub},
+      '../../../src/bitbucket/bitbucket-client.js': {
+        clearClients: clearClientsStub,
+        listPullRequests: listPullRequestsStub,
+      },
+      '../../../src/format.js': {formatAsToon: formatAsToonStub},
+    })
+    PrList = imported.default
+  })
+
+  it('calls listPullRequests with correct args and outputs JSON', async () => {
+    const cmd = new PrList(['my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const logJsonStub = sinon.stub(cmd, 'logJson')
+
+    await cmd.run()
+
+    expect(readConfigStub.calledOnce).to.be.true
+    expect(listPullRequestsStub.calledOnce).to.be.true
+    expect(listPullRequestsStub.firstCall.args).to.deep.equal([mockConfig.auth, 'my-ws', 'my-repo', undefined, 1, 10])
+    expect(clearClientsStub.calledOnce).to.be.true
+    expect(logJsonStub.calledOnce).to.be.true
+    expect(logJsonStub.firstCall.args[0]).to.deep.equal(mockResult)
+  })
+
+  it('passes optional flags correctly', async () => {
+    const cmd = new PrList(
+      ['my-repo', 'my-ws', '--state', 'OPEN', '--page', '2', '--pagelen', '25'],
+      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
+    )
+    const logJsonStub = sinon.stub(cmd, 'logJson')
+
+    await cmd.run()
+
+    expect(listPullRequestsStub.calledOnce).to.be.true
+    expect(listPullRequestsStub.firstCall.args).to.deep.equal([mockConfig.auth, 'my-ws', 'my-repo', 'OPEN', 2, 25])
+    expect(clearClientsStub.calledOnce).to.be.true
+    expect(logJsonStub.calledOnce).to.be.true
+  })
+
+  it('returns early when config is missing', async () => {
+    readConfigStub.resolves(null)
+
+    const cmd = new PrList(['my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const logJsonStub = sinon.stub(cmd, 'logJson')
+
+    await cmd.run()
+
+    expect(readConfigStub.calledOnce).to.be.true
+    expect(listPullRequestsStub.called).to.be.false
+    expect(clearClientsStub.called).to.be.false
+    expect(logJsonStub.called).to.be.false
+  })
+
+  it('outputs TOON format when --toon flag is used', async () => {
+    const cmd = new PrList(['my-repo', 'my-ws', '--toon'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const logStub = sinon.stub(cmd, 'log')
+
+    await cmd.run()
+
+    expect(listPullRequestsStub.calledOnce).to.be.true
+    expect(listPullRequestsStub.firstCall.args).to.deep.equal([mockConfig.auth, 'my-ws', 'my-repo', undefined, 1, 10])
+    expect(clearClientsStub.calledOnce).to.be.true
+    expect(formatAsToonStub.calledOnce).to.be.true
+    expect(formatAsToonStub.firstCall.args[0]).to.deep.equal(mockResult)
+    expect(logStub.calledWith('toon-output')).to.be.true
   })
 })
