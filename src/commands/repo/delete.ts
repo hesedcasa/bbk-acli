@@ -5,10 +5,12 @@ import {readConfig} from '../../config.js'
 import {formatAsToon} from '../../format.js'
 
 export default class RepoDelete extends Command {
+  /* eslint-disable perfectionist/sort-objects */
   static override args = {
-    repoSlug: Args.string({description: 'Repository slug', required: true}),
     workspace: Args.string({description: 'Workspace slug or UUID', required: true}),
+    repoSlug: Args.string({description: 'Repository slug', required: true}),
   }
+  /* eslint-enable perfectionist/sort-objects */
   static override description = 'Delete a repository'
   static override examples = ['<%= config.bin %> <%= command.id %> my-workspace my-repo']
   static override flags = {

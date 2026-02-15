@@ -51,12 +51,27 @@ export class BitbucketApi {
     sourceBranch: string,
     destinationBranch: string,
     description?: string,
-    closeSrcBranch?: boolean,
     reviewers?: string[],
+    autoAddReviewers = true,
   ): Promise<ApiResult> {
+    let finalReviewers = reviewers
+
+    if (autoAddReviewers) {
+      const [currentUser, defaultReviewers] = await Promise.all([
+        this.getCurrentUser(),
+        this.getDefaultReviewers(workspace, repoSlug),
+      ])
+
+      if (currentUser.success && currentUser.data && defaultReviewers.length > 0) {
+        const currentUserUuid = (currentUser.data as {uuid: string}).uuid
+        const filteredReviewers = defaultReviewers.filter((reviewer) => reviewer.uuid !== currentUserUuid)
+        finalReviewers = reviewers
+          ? [...reviewers, ...filteredReviewers.map((r) => r.uuid)]
+          : filteredReviewers.map((r) => r.uuid)
+      }
+    }
+
     const body: Record<string, unknown> = {
-      // eslint-disable-next-line camelcase
-      close_source_branch: closeSrcBranch ?? false,
       destination: {branch: {name: destinationBranch}},
       source: {branch: {name: sourceBranch}},
       title,
@@ -66,8 +81,8 @@ export class BitbucketApi {
       body.description = description
     }
 
-    if (reviewers && reviewers.length > 0) {
-      body.reviewers = reviewers.map((uuid) => ({uuid}))
+    if (finalReviewers && finalReviewers.length > 0) {
+      body.reviewers = finalReviewers.map((uuid) => ({uuid}))
     }
 
     return this.request(`/repositories/${workspace}/${repoSlug}/pullrequests`, {
@@ -116,6 +131,32 @@ export class BitbucketApi {
     return this.request(`/repositories/${workspace}/${repoSlug}`, {
       method: 'DELETE',
     })
+  }
+
+  /**
+   * Get the current authenticated user
+   */
+  async getCurrentUser(): Promise<ApiResult> {
+    return this.request('/user')
+  }
+
+  /**
+   * Get default reviewers for a repository
+   */
+  async getDefaultReviewers(workspace: string, repoSlug: string): Promise<Array<{uuid: string}>> {
+    const result = await this.request(`/repositories/${workspace}/${repoSlug}/effective-default-reviewers`)
+
+    if (!result.success || !result.data) {
+      return []
+    }
+
+    const response = result.data as {values?: Array<{user?: {uuid?: string}; uuid?: string}>}
+    const reviewers = response.values || []
+    return reviewers
+      .map((reviewer) => ({
+        uuid: reviewer.user?.uuid || reviewer.uuid || '',
+      }))
+      .filter((reviewer) => reviewer.uuid !== '')
   }
 
   /**

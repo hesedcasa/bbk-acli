@@ -5,11 +5,13 @@ import {readConfig} from '../../config.js'
 import {formatAsToon} from '../../format.js'
 
 export default class PipelineGet extends Command {
+  /* eslint-disable perfectionist/sort-objects */
   static override args = {
-    pipelineUuid: Args.string({description: 'Pipeline UUID', required: true}),
-    repoSlug: Args.string({description: 'Repository slug', required: true}),
     workspace: Args.string({description: 'Workspace slug or UUID', required: true}),
+    repoSlug: Args.string({description: 'Repository slug', required: true}),
+    pipelineUuid: Args.string({description: 'Pipeline UUID', required: true}),
   }
+  /* eslint-enable perfectionist/sort-objects */
   static override description = 'Get details of a specific pipeline'
   static override examples = ['<%= config.bin %> <%= command.id %> my-workspace my-repo {uuid}']
   static override flags = {

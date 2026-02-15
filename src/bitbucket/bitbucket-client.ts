@@ -169,8 +169,8 @@ export async function getPullRequest(
  * @param sourceBranch - Source branch name
  * @param destinationBranch - Destination branch name
  * @param description - Pull request description
- * @param closeSrcBranch - Close source branch on merge
  * @param reviewers - List of reviewer UUIDs
+ * @param autoAddReviewers - Automatically add default reviewers from repository settings
  */
 // eslint-disable-next-line max-params
 export async function createPullRequest(
@@ -181,8 +181,8 @@ export async function createPullRequest(
   sourceBranch: string,
   destinationBranch: string,
   description?: string,
-  closeSrcBranch?: boolean,
   reviewers?: string[],
+  autoAddReviewers = true,
 ): Promise<ApiResult> {
   const bb = await initBitbucket(config)
   return bb.createPullRequest(
@@ -192,8 +192,8 @@ export async function createPullRequest(
     sourceBranch,
     destinationBranch,
     description,
-    closeSrcBranch,
     reviewers,
+    autoAddReviewers,
   )
 }
 

@@ -5,13 +5,15 @@ import {readConfig} from '../../config.js'
 import {formatAsToon} from '../../format.js'
 
 export default class PrGet extends Command {
+  /* eslint-disable perfectionist/sort-objects */
   static override args = {
-    pullRequestId: Args.integer({description: 'Pull request ID', required: true}),
-    repoSlug: Args.string({description: 'Repository slug', required: true}),
     workspace: Args.string({description: 'Workspace slug or UUID', required: true}),
+    repoSlug: Args.string({description: 'Repository slug', required: true}),
+    pullRequestId: Args.integer({description: 'Pull request ID', required: true}),
   }
+  /* eslint-enable perfectionist/sort-objects */
   static override description = 'Get details of a specific pull request'
-  static override examples = ['<%= config.bin %> <%= command.id %> my-workspace my-repo 1']
+  static override examples = ['<%= config.bin %> <%= command.id %> my-workspace my-repo 123']
   static override flags = {
     toon: Flags.boolean({description: 'Format output as toon', required: false}),
   }
