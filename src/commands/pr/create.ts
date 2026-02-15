@@ -5,21 +5,18 @@ import {readConfig} from '../../config.js'
 import {formatAsToon} from '../../format.js'
 
 export default class PrCreate extends Command {
+  /* eslint-disable perfectionist/sort-objects */
   static override args = {
-    repoSlug: Args.string({description: 'Repository slug', required: true}),
     workspace: Args.string({description: 'Workspace slug or UUID', required: true}),
+    repoSlug: Args.string({description: 'Repository slug', required: true}),
   }
+  /* eslint-enable perfectionist/sort-objects */
   static override description = 'Create a new pull request'
   static override examples = [
     '<%= config.bin %> <%= command.id %> my-workspace my-repo --title "My PR" --source feature-branch --destination main',
   ]
   static override flags = {
-    'close-source-branch': Flags.boolean({
-      default: false,
-      description: 'Close source branch after merge',
-      required: false,
-    }),
-    description: Flags.string({char: 'd', description: 'Pull request description', required: false}),
+    description: Flags.string({description: 'Pull request description', required: false}),
     destination: Flags.string({description: 'Destination branch name', required: true}),
     reviewers: Flags.string({description: 'Comma-separated list of reviewer UUIDs', required: false}),
     source: Flags.string({description: 'Source branch name', required: true}),
@@ -44,8 +41,8 @@ export default class PrCreate extends Command {
       flags.source,
       flags.destination,
       flags.description,
-      flags['close-source-branch'],
       reviewers,
+      true,
     )
     clearClients()
 

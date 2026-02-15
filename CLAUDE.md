@@ -127,7 +127,7 @@ Authentication config is stored in JSON at `~/.config/bbk-acli/config.json` (pla
 {
   "auth": {
     "email": "user@example.com",
-    "apiToken": "token",
+    "apiToken": "token"
   }
 }
 ```
