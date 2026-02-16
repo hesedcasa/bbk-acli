@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('pr:create', () => {
   let PrCreate: any
-  let readConfigStub: sinon.SinonStub
-  let createPullRequestStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let formatAsToonStub: sinon.SinonStub
+  let readConfigStub: SinonStub
+  let createPullRequestStub: SinonStub
+  let clearClientsStub: SinonStub
+  let formatAsToonStub: SinonStub
 
   const mockConfig = {
     auth: {
@@ -21,10 +21,10 @@ describe('pr:create', () => {
   const mockResult = {data: {id: 1, title: 'My PR'}, success: true}
 
   beforeEach(async () => {
-    readConfigStub = sinon.stub().resolves(mockConfig)
-    createPullRequestStub = sinon.stub().resolves(mockResult)
-    clearClientsStub = sinon.stub()
-    formatAsToonStub = sinon.stub().returns('toon-output')
+    readConfigStub = stub().resolves(mockConfig)
+    createPullRequestStub = stub().resolves(mockResult)
+    clearClientsStub = stub()
+    formatAsToonStub = stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pr/create.js', {
       '../../../src/bitbucket/bitbucket-client.js': {
@@ -40,9 +40,9 @@ describe('pr:create', () => {
   it('calls createPullRequest with correct args and outputs JSON', async () => {
     const cmd = new PrCreate(['my-ws', 'my-repo', '--title', 'My PR', '--source', 'feature', '--destination', 'main'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -80,9 +80,9 @@ describe('pr:create', () => {
         '--reviewers',
         'uuid1, uuid2, uuid3',
       ],
-      {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any,
+      {root: process.cwd(), runHook: stub().resolves({failures: [], successes: []})} as any,
     )
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -107,9 +107,9 @@ describe('pr:create', () => {
 
     const cmd = new PrCreate(['my-ws', 'my-repo', '--title', 'My PR', '--source', 'feature', '--destination', 'main'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -122,9 +122,9 @@ describe('pr:create', () => {
   it('outputs TOON format when --toon flag is used', async () => {
     const cmd = new PrCreate(
       ['my-ws', 'my-repo', '--title', 'My PR', '--source', 'feature', '--destination', 'main', '--toon'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any,
+      {root: process.cwd(), runHook: stub().resolves({failures: [], successes: []})} as any,
     )
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 

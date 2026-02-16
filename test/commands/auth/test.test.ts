@@ -1,26 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('auth:test', () => {
   let AuthTest: any
-  let readConfigStub: sinon.SinonStub
-  let testConnectionStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let actionStartStub: sinon.SinonStub
-  let actionStopStub: sinon.SinonStub
+  let readConfigStub: SinonStub
+  let testConnectionStub: SinonStub
+  let clearClientsStub: SinonStub
+  let actionStartStub: SinonStub
+  let actionStopStub: SinonStub
 
   const mockConfig = {
     auth: {apiToken: 'test-token', email: 'test@example.com', host: 'https://bitbucket.org'},
   }
 
   beforeEach(async () => {
-    readConfigStub = sinon.stub().resolves(mockConfig)
-    testConnectionStub = sinon.stub()
-    clearClientsStub = sinon.stub()
-    actionStartStub = sinon.stub()
-    actionStopStub = sinon.stub()
+    readConfigStub = stub().resolves(mockConfig)
+    testConnectionStub = stub()
+    clearClientsStub = stub()
+    actionStartStub = stub()
+    actionStopStub = stub()
 
     const imported = await esmock('../../../src/commands/auth/test.js', {
       '../../../src/bitbucket/bitbucket-client.js': {
@@ -38,9 +38,9 @@ describe('auth:test', () => {
 
     const cmd = new AuthTest([], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     const result = await cmd.run()
 
@@ -57,10 +57,10 @@ describe('auth:test', () => {
 
     const cmd = new AuthTest([], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
-    const errorStub = sinon.stub(cmd, 'error')
+    stub(cmd, 'log')
+    const errorStub = stub(cmd, 'error')
 
     await cmd.run()
 
@@ -73,9 +73,9 @@ describe('auth:test', () => {
 
     const cmd = new AuthTest([], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
+    stub(cmd, 'log')
 
     const result = await cmd.run()
 

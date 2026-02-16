@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('workspace:get', () => {
   let WorkspaceGet: any
-  let readConfigStub: sinon.SinonStub
-  let getWorkspaceStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let formatAsToonStub: sinon.SinonStub
+  let readConfigStub: SinonStub
+  let getWorkspaceStub: SinonStub
+  let clearClientsStub: SinonStub
+  let formatAsToonStub: SinonStub
 
   const mockConfig = {
     auth: {
@@ -21,10 +21,10 @@ describe('workspace:get', () => {
   const mockResult = {data: {name: 'My Workspace', slug: 'my-workspace'}, success: true}
 
   beforeEach(async () => {
-    readConfigStub = sinon.stub().resolves(mockConfig)
-    getWorkspaceStub = sinon.stub().resolves(mockResult)
-    clearClientsStub = sinon.stub()
-    formatAsToonStub = sinon.stub().returns('toon-output')
+    readConfigStub = stub().resolves(mockConfig)
+    getWorkspaceStub = stub().resolves(mockResult)
+    clearClientsStub = stub()
+    formatAsToonStub = stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/workspace/get.js', {
       '../../../src/bitbucket/bitbucket-client.js': {
@@ -38,9 +38,9 @@ describe('workspace:get', () => {
   })
 
   it('calls getWorkspace with correct args and outputs JSON', async () => {
-    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any
+    const oclifConfig = {root: process.cwd(), runHook: stub().resolves({failures: [], successes: []})} as any
     const cmd = new WorkspaceGet(['my-workspace'], oclifConfig)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -55,9 +55,9 @@ describe('workspace:get', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any
+    const oclifConfig = {root: process.cwd(), runHook: stub().resolves({failures: [], successes: []})} as any
     const cmd = new WorkspaceGet(['my-workspace'], oclifConfig)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -68,9 +68,9 @@ describe('workspace:get', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any
+    const oclifConfig = {root: process.cwd(), runHook: stub().resolves({failures: [], successes: []})} as any
     const cmd = new WorkspaceGet(['my-workspace', '--toon'], oclifConfig)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 

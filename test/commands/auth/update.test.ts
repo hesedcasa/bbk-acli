@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('auth:update', () => {
   let AuthUpdate: any
-  let testConnectionStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let fsStub: Record<string, sinon.SinonStub>
-  let confirmStub: sinon.SinonStub
-  let actionStartStub: sinon.SinonStub
-  let actionStopStub: sinon.SinonStub
+  let testConnectionStub: SinonStub
+  let clearClientsStub: SinonStub
+  let fsStub: Record<string, SinonStub>
+  let confirmStub: SinonStub
+  let actionStartStub: SinonStub
+  let actionStopStub: SinonStub
 
   const existingConfig = {auth: {apiToken: 'old-token', email: 'old@test.com'}}
 
   beforeEach(async () => {
-    testConnectionStub = sinon.stub()
-    clearClientsStub = sinon.stub()
-    confirmStub = sinon.stub().resolves(true)
-    actionStartStub = sinon.stub()
-    actionStopStub = sinon.stub()
+    testConnectionStub = stub()
+    clearClientsStub = stub()
+    confirmStub = stub().resolves(true)
+    actionStartStub = stub()
+    actionStopStub = stub()
     fsStub = {
-      readJSON: sinon.stub().resolves(existingConfig),
-      writeJSON: sinon.stub().resolves(),
+      readJSON: stub().resolves(existingConfig),
+      writeJSON: stub().resolves(),
     }
 
     const imported = await esmock('../../../src/commands/auth/update.js', {
@@ -30,7 +30,7 @@ describe('auth:update', () => {
         clearClients: clearClientsStub,
         testConnection: testConnectionStub,
       },
-      '@inquirer/prompts': {confirm: confirmStub, input: sinon.stub()},
+      '@inquirer/prompts': {confirm: confirmStub, input: stub()},
       '@oclif/core/ux': {action: {start: actionStartStub, stop: actionStopStub}},
       'fs-extra': {default: fsStub},
     })
@@ -43,9 +43,9 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'new-token', '-e', 'new@test.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     const result = await cmd.run()
 
@@ -68,9 +68,9 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
+    stub(cmd, 'log')
 
     const result = await cmd.run()
 
@@ -85,9 +85,9 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 
@@ -101,9 +101,9 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 
@@ -117,10 +117,10 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'bad', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
-    const errorStub = sinon.stub(cmd, 'error')
+    stub(cmd, 'log')
+    const errorStub = stub(cmd, 'error')
 
     await cmd.run()
 

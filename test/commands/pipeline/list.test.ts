@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('pipeline:list', () => {
   let PipelineList: any
-  let readConfigStub: sinon.SinonStub
-  let listPipelinesStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let formatAsToonStub: sinon.SinonStub
+  let readConfigStub: SinonStub
+  let listPipelinesStub: SinonStub
+  let clearClientsStub: SinonStub
+  let formatAsToonStub: SinonStub
 
   const mockConfig = {
     auth: {
@@ -24,10 +24,10 @@ describe('pipeline:list', () => {
   }
 
   beforeEach(async () => {
-    readConfigStub = sinon.stub().resolves(mockConfig)
-    listPipelinesStub = sinon.stub().resolves(mockResult)
-    clearClientsStub = sinon.stub()
-    formatAsToonStub = sinon.stub().returns('toon-output')
+    readConfigStub = stub().resolves(mockConfig)
+    listPipelinesStub = stub().resolves(mockResult)
+    clearClientsStub = stub()
+    formatAsToonStub = stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pipeline/list.js', {
       '../../../src/bitbucket/bitbucket-client.js': {
@@ -43,9 +43,9 @@ describe('pipeline:list', () => {
   it('calls listPipelines with correct args and outputs JSON', async () => {
     const cmd = new PipelineList(['my-ws', 'my-repo'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -60,9 +60,9 @@ describe('pipeline:list', () => {
   it('passes custom page, pagelen, and sort flags', async () => {
     const cmd = new PipelineList(['my-ws', 'my-repo', '--page', '3', '--pagelen', '25', '--sort', 'created_on'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -77,9 +77,9 @@ describe('pipeline:list', () => {
 
     const cmd = new PipelineList(['my-ws', 'my-repo'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -92,9 +92,9 @@ describe('pipeline:list', () => {
   it('outputs TOON format when --toon flag is used', async () => {
     const cmd = new PipelineList(['my-ws', 'my-repo', '--toon'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 

@@ -1,26 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('auth:add', () => {
   let AuthAdd: any
-  let testConnectionStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let fsStub: Record<string, sinon.SinonStub>
-  let actionStartStub: sinon.SinonStub
-  let actionStopStub: sinon.SinonStub
+  let testConnectionStub: SinonStub
+  let clearClientsStub: SinonStub
+  let fsStub: Record<string, SinonStub>
+  let actionStartStub: SinonStub
+  let actionStopStub: SinonStub
 
   beforeEach(async () => {
-    testConnectionStub = sinon.stub()
-    clearClientsStub = sinon.stub()
-    actionStartStub = sinon.stub()
-    actionStopStub = sinon.stub()
+    testConnectionStub = stub()
+    clearClientsStub = stub()
+    actionStartStub = stub()
+    actionStopStub = stub()
     fsStub = {
-      createFile: sinon.stub().resolves(),
-      pathExists: sinon.stub().resolves(false),
-      readJSON: sinon.stub().resolves({auth: {apiToken: 'tok', email: 'e@e.com'}}),
-      writeJSON: sinon.stub().resolves(),
+      createFile: stub().resolves(),
+      pathExists: stub().resolves(false),
+      readJSON: stub().resolves({auth: {apiToken: 'tok', email: 'e@e.com'}}),
+      writeJSON: stub().resolves(),
     }
 
     const imported = await esmock('../../../src/commands/auth/add.js', {
@@ -40,9 +40,9 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'my-token', '-e', 'user@test.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     const result = await cmd.run()
 
@@ -66,9 +66,9 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
+    stub(cmd, 'log')
 
     await cmd.run()
 
@@ -82,10 +82,10 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'bad', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
-    const errorStub = sinon.stub(cmd, 'error')
+    stub(cmd, 'log')
+    const errorStub = stub(cmd, 'error')
 
     await cmd.run()
 
@@ -99,9 +99,9 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    sinon.stub(cmd, 'log')
+    stub(cmd, 'log')
 
     await cmd.run()
 

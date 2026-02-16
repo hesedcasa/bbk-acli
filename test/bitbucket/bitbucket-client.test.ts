@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('bitbucket-client', () => {
   const mockConfig = {apiToken: 'test-token', email: 'test@example.com', host: 'https://bitbucket.org'}
@@ -26,32 +26,32 @@ describe('bitbucket-client', () => {
   let getPipelineFn: any
   let triggerPipelineFn: any
 
-  let mockApiInstance: Record<string, sinon.SinonStub>
-  let BitbucketApiStub: sinon.SinonStub
+  let mockApiInstance: Record<string, SinonStub>
+  let BitbucketApiStub: SinonStub
 
   beforeEach(async () => {
     mockApiInstance = {
-      approvePullRequest: sinon.stub().resolves(mockResult),
-      clearClients: sinon.stub(),
-      createPullRequest: sinon.stub().resolves(mockResult),
-      createRepository: sinon.stub().resolves(mockResult),
-      declinePullRequest: sinon.stub().resolves(mockResult),
-      deleteRepository: sinon.stub().resolves(mockResult),
-      getPipeline: sinon.stub().resolves(mockResult),
-      getPullRequest: sinon.stub().resolves(mockResult),
-      getRepository: sinon.stub().resolves(mockResult),
-      getWorkspace: sinon.stub().resolves(mockResult),
-      listPipelines: sinon.stub().resolves(mockResult),
-      listPullRequests: sinon.stub().resolves(mockResult),
-      listRepositories: sinon.stub().resolves(mockResult),
-      listWorkspaces: sinon.stub().resolves(mockResult),
-      mergePullRequest: sinon.stub().resolves(mockResult),
-      testConnection: sinon.stub().resolves(mockResult),
-      triggerPipeline: sinon.stub().resolves(mockResult),
-      unapprovePullRequest: sinon.stub().resolves(mockResult),
-      updatePullRequest: sinon.stub().resolves(mockResult),
+      approvePullRequest: stub().resolves(mockResult),
+      clearClients: stub(),
+      createPullRequest: stub().resolves(mockResult),
+      createRepository: stub().resolves(mockResult),
+      declinePullRequest: stub().resolves(mockResult),
+      deleteRepository: stub().resolves(mockResult),
+      getPipeline: stub().resolves(mockResult),
+      getPullRequest: stub().resolves(mockResult),
+      getRepository: stub().resolves(mockResult),
+      getWorkspace: stub().resolves(mockResult),
+      listPipelines: stub().resolves(mockResult),
+      listPullRequests: stub().resolves(mockResult),
+      listRepositories: stub().resolves(mockResult),
+      listWorkspaces: stub().resolves(mockResult),
+      mergePullRequest: stub().resolves(mockResult),
+      testConnection: stub().resolves(mockResult),
+      triggerPipeline: stub().resolves(mockResult),
+      unapprovePullRequest: stub().resolves(mockResult),
+      updatePullRequest: stub().resolves(mockResult),
     }
-    BitbucketApiStub = sinon.stub().returns(mockApiInstance)
+    BitbucketApiStub = stub().returns(mockApiInstance)
 
     const mod = await esmock('../../src/bitbucket/bitbucket-client.js', {
       '../../src/bitbucket/bitbucket-api.js': {BitbucketApi: BitbucketApiStub},
@@ -107,7 +107,7 @@ describe('bitbucket-client', () => {
     it('wraps constructor errors', async () => {
       const failMod = await esmock('../../src/bitbucket/bitbucket-client.js', {
         '../../src/bitbucket/bitbucket-api.js': {
-          BitbucketApi: sinon.stub().throws(new Error('init failed')),
+          BitbucketApi: stub().throws(new Error('init failed')),
         },
       })
 
@@ -123,7 +123,7 @@ describe('bitbucket-client', () => {
     it('wraps non-Error constructor exceptions', async () => {
       const failMod = await esmock('../../src/bitbucket/bitbucket-client.js', {
         '../../src/bitbucket/bitbucket-api.js': {
-          BitbucketApi: sinon.stub().throws('string error'),
+          BitbucketApi: stub().throws('string error'),
         },
       })
 

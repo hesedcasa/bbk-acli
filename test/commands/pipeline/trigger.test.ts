@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('pipeline:trigger', () => {
   let PipelineTrigger: any
-  let readConfigStub: sinon.SinonStub
-  let triggerPipelineStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let formatAsToonStub: sinon.SinonStub
+  let readConfigStub: SinonStub
+  let triggerPipelineStub: SinonStub
+  let clearClientsStub: SinonStub
+  let formatAsToonStub: SinonStub
 
   const mockConfig = {
     auth: {
@@ -21,10 +21,10 @@ describe('pipeline:trigger', () => {
   const mockResult = {data: {state: {name: 'PENDING'}, uuid: '{triggered-pipe}'}, success: true}
 
   beforeEach(async () => {
-    readConfigStub = sinon.stub().resolves(mockConfig)
-    triggerPipelineStub = sinon.stub().resolves(mockResult)
-    clearClientsStub = sinon.stub()
-    formatAsToonStub = sinon.stub().returns('toon-output')
+    readConfigStub = stub().resolves(mockConfig)
+    triggerPipelineStub = stub().resolves(mockResult)
+    clearClientsStub = stub()
+    formatAsToonStub = stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pipeline/trigger.js', {
       '../../../src/bitbucket/bitbucket-client.js': {
@@ -40,9 +40,9 @@ describe('pipeline:trigger', () => {
   it('calls triggerPipeline with correct args and outputs JSON', async () => {
     const cmd = new PipelineTrigger(['my-ws', 'my-repo', '--branch', 'main'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -62,9 +62,9 @@ describe('pipeline:trigger', () => {
   it('includes custom selector when --custom flag is provided', async () => {
     const cmd = new PipelineTrigger(['my-ws', 'my-repo', '--branch', 'main', '--custom', 'my-pipeline'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -84,9 +84,9 @@ describe('pipeline:trigger', () => {
 
     const cmd = new PipelineTrigger(['my-ws', 'my-repo', '--branch', 'main'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -99,9 +99,9 @@ describe('pipeline:trigger', () => {
   it('outputs TOON format when --toon flag is used', async () => {
     const cmd = new PipelineTrigger(['my-ws', 'my-repo', '--branch', 'main', '--toon'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 

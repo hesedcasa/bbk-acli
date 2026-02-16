@@ -1,6 +1,6 @@
 /* eslint-disable n/no-unsupported-features/node-builtins */
 import {expect} from 'chai'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 import {BitbucketApi} from '../../src/bitbucket/bitbucket-api.js'
 
@@ -11,11 +11,11 @@ describe('BitbucketApi', () => {
     host: 'https://bitbucket.org',
   }
   let api: BitbucketApi
-  let fetchStub: sinon.SinonStub
+  let fetchStub: SinonStub
 
   beforeEach(() => {
     api = new BitbucketApi(config)
-    fetchStub = sinon.stub(globalThis, 'fetch')
+    fetchStub = stub(globalThis, 'fetch')
   })
 
   afterEach(() => {

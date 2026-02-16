@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
-import sinon from 'sinon'
+import {type SinonStub, stub} from 'sinon'
 
 describe('pr:update', () => {
   let PrUpdate: any
-  let readConfigStub: sinon.SinonStub
-  let updatePullRequestStub: sinon.SinonStub
-  let clearClientsStub: sinon.SinonStub
-  let formatAsToonStub: sinon.SinonStub
+  let readConfigStub: SinonStub
+  let updatePullRequestStub: SinonStub
+  let clearClientsStub: SinonStub
+  let formatAsToonStub: SinonStub
 
   const mockConfig = {
     auth: {
@@ -21,10 +21,10 @@ describe('pr:update', () => {
   const mockResult = {data: {id: 42, title: 'Updated title'}, success: true}
 
   beforeEach(async () => {
-    readConfigStub = sinon.stub().resolves(mockConfig)
-    updatePullRequestStub = sinon.stub().resolves(mockResult)
-    clearClientsStub = sinon.stub()
-    formatAsToonStub = sinon.stub().returns('toon-output')
+    readConfigStub = stub().resolves(mockConfig)
+    updatePullRequestStub = stub().resolves(mockResult)
+    clearClientsStub = stub()
+    formatAsToonStub = stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pr/update.js', {
       '../../../src/bitbucket/bitbucket-client.js': {
@@ -40,9 +40,9 @@ describe('pr:update', () => {
   it('calls updatePullRequest with title flag and outputs JSON', async () => {
     const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'Updated title'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -63,9 +63,9 @@ describe('pr:update', () => {
   it('calls updatePullRequest with both title and description flags', async () => {
     const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'New title', '-d', 'New description'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -84,9 +84,9 @@ describe('pr:update', () => {
   it('calls updatePullRequest with empty fields when no optional flags provided', async () => {
     const cmd = new PrUpdate(['my-ws', 'my-repo', '42'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -101,9 +101,9 @@ describe('pr:update', () => {
 
     const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'Updated title'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logJsonStub = sinon.stub(cmd, 'logJson')
+    const logJsonStub = stub(cmd, 'logJson')
 
     await cmd.run()
 
@@ -116,9 +116,9 @@ describe('pr:update', () => {
   it('outputs TOON format when --toon flag is used', async () => {
     const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'Updated title', '--toon'], {
       root: process.cwd(),
-      runHook: sinon.stub().resolves({failures: [], successes: []}),
+      runHook: stub().resolves({failures: [], successes: []}),
     } as any)
-    const logStub = sinon.stub(cmd, 'log')
+    const logStub = stub(cmd, 'log')
 
     await cmd.run()
 
