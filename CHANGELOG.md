@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/hesedcasa/bbk-acli/compare/v0.1.0...v0.1.1) (2026-02-16)
+
+
+### ♻️ Chores
+
+* move all commands and tests under bb/ subdirectory ([#6](https://github.com/hesedcasa/bbk-acli/issues/6)) ([ae06fe1](https://github.com/hesedcasa/bbk-acli/commit/ae06fe1077c135666923afca760f6455704a42db))
+
 ## 0.1.0 (2026-02-15)
 
 
