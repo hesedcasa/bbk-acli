@@ -18,7 +18,7 @@ $ npm install -g bbk-acli
 $ bbk-acli COMMAND
 running command...
 $ bbk-acli (--version)
-bbk-acli/0.0.0 linux-x64 node-v20.20.0
+bbk-acli/0.1.0 linux-x64 node-v20.20.0
 $ bbk-acli --help [COMMAND]
 USAGE
   $ bbk-acli COMMAND
@@ -76,7 +76,7 @@ EXAMPLES
   $ bbk-acli auth add
 ```
 
-_See code: [src/commands/auth/add.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/auth/add.ts)_
+_See code: [src/commands/auth/add.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/auth/add.ts)_
 
 ## `bbk-acli auth test`
 
@@ -96,7 +96,7 @@ EXAMPLES
   $ bbk-acli auth test
 ```
 
-_See code: [src/commands/auth/test.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/auth/test.ts)_
+_See code: [src/commands/auth/test.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/auth/test.ts)_
 
 ## `bbk-acli auth update`
 
@@ -120,7 +120,7 @@ EXAMPLES
   $ bbk-acli auth update
 ```
 
-_See code: [src/commands/auth/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/auth/update.ts)_
+_See code: [src/commands/auth/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/auth/update.ts)_
 
 ## `bbk-acli commands`
 
@@ -194,7 +194,7 @@ EXAMPLES
   $ bbk-acli pipeline get my-workspace my-repo {uuid}
 ```
 
-_See code: [src/commands/pipeline/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pipeline/get.ts)_
+_See code: [src/commands/pipeline/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pipeline/get.ts)_
 
 ## `bbk-acli pipeline list WORKSPACE REPOSLUG`
 
@@ -221,7 +221,7 @@ EXAMPLES
   $ bbk-acli pipeline list my-workspace my-repo
 ```
 
-_See code: [src/commands/pipeline/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pipeline/list.ts)_
+_See code: [src/commands/pipeline/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pipeline/list.ts)_
 
 ## `bbk-acli pipeline trigger WORKSPACE REPOSLUG`
 
@@ -249,7 +249,7 @@ EXAMPLES
   $ bbk-acli pipeline trigger my-workspace my-repo --branch main --custom my-pipeline
 ```
 
-_See code: [src/commands/pipeline/trigger.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pipeline/trigger.ts)_
+_See code: [src/commands/pipeline/trigger.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pipeline/trigger.ts)_
 
 ## `bbk-acli pr approve WORKSPACE REPOSLUG PULLREQUESTID`
 
@@ -274,7 +274,7 @@ EXAMPLES
   $ bbk-acli pr approve my-workspace my-repo 123
 ```
 
-_See code: [src/commands/pr/approve.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/approve.ts)_
+_See code: [src/commands/pr/approve.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/approve.ts)_
 
 ## `bbk-acli pr create WORKSPACE REPOSLUG`
 
@@ -304,7 +304,7 @@ EXAMPLES
   $ bbk-acli pr create my-workspace my-repo --title "My PR" --source feature-branch --destination main
 ```
 
-_See code: [src/commands/pr/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/create.ts)_
+_See code: [src/commands/pr/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/create.ts)_
 
 ## `bbk-acli pr decline WORKSPACE REPOSLUG PULLREQUESTID`
 
@@ -329,7 +329,7 @@ EXAMPLES
   $ bbk-acli pr decline my-workspace my-repo 123
 ```
 
-_See code: [src/commands/pr/decline.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/decline.ts)_
+_See code: [src/commands/pr/decline.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/decline.ts)_
 
 ## `bbk-acli pr get WORKSPACE REPOSLUG PULLREQUESTID`
 
@@ -354,7 +354,7 @@ EXAMPLES
   $ bbk-acli pr get my-workspace my-repo 123
 ```
 
-_See code: [src/commands/pr/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/get.ts)_
+_See code: [src/commands/pr/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/get.ts)_
 
 ## `bbk-acli pr list WORKSPACE REPOSLUG`
 
@@ -381,7 +381,7 @@ EXAMPLES
   $ bbk-acli pr list my-workspace my-repo
 ```
 
-_See code: [src/commands/pr/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/list.ts)_
+_See code: [src/commands/pr/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/list.ts)_
 
 ## `bbk-acli pr merge WORKSPACE REPOSLUG PULLREQUESTID`
 
@@ -411,7 +411,7 @@ EXAMPLES
   $ bbk-acli pr merge my-workspace my-repo 123
 ```
 
-_See code: [src/commands/pr/merge.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/merge.ts)_
+_See code: [src/commands/pr/merge.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/merge.ts)_
 
 ## `bbk-acli pr unapprove WORKSPACE REPOSLUG PULLREQUESTID`
 
@@ -436,7 +436,7 @@ EXAMPLES
   $ bbk-acli pr unapprove my-workspace my-repo 123
 ```
 
-_See code: [src/commands/pr/unapprove.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/unapprove.ts)_
+_See code: [src/commands/pr/unapprove.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/unapprove.ts)_
 
 ## `bbk-acli pr update WORKSPACE REPOSLUG PULLREQUESTID`
 
@@ -463,7 +463,7 @@ EXAMPLES
   $ bbk-acli pr update my-workspace my-repo 1 --title "Updated title"
 ```
 
-_See code: [src/commands/pr/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/pr/update.ts)_
+_See code: [src/commands/pr/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/update.ts)_
 
 ## `bbk-acli repo create WORKSPACE REPOSLUG`
 
@@ -494,7 +494,7 @@ EXAMPLES
   $ bbk-acli repo create my-workspace my-repo --private --description "My new repo"
 ```
 
-_See code: [src/commands/repo/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/repo/create.ts)_
+_See code: [src/commands/repo/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/create.ts)_
 
 ## `bbk-acli repo delete WORKSPACE REPOSLUG`
 
@@ -518,7 +518,7 @@ EXAMPLES
   $ bbk-acli repo delete my-workspace my-repo
 ```
 
-_See code: [src/commands/repo/delete.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/repo/delete.ts)_
+_See code: [src/commands/repo/delete.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/delete.ts)_
 
 ## `bbk-acli repo get WORKSPACE REPOSLUG`
 
@@ -542,7 +542,7 @@ EXAMPLES
   $ bbk-acli repo get my-workspace my-repo
 ```
 
-_See code: [src/commands/repo/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/repo/get.ts)_
+_See code: [src/commands/repo/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/get.ts)_
 
 ## `bbk-acli repo list WORKSPACE`
 
@@ -569,7 +569,7 @@ EXAMPLES
   $ bbk-acli repo list my-workspace
 ```
 
-_See code: [src/commands/repo/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/repo/list.ts)_
+_See code: [src/commands/repo/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/list.ts)_
 
 ## `bbk-acli update [CHANNEL]`
 
@@ -650,7 +650,7 @@ EXAMPLES
   $ bbk-acli workspace get my-workspace
 ```
 
-_See code: [src/commands/workspace/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/workspace/get.ts)_
+_See code: [src/commands/workspace/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/workspace/get.ts)_
 
 ## `bbk-acli workspace list`
 
@@ -672,5 +672,5 @@ EXAMPLES
   $ bbk-acli workspace list
 ```
 
-_See code: [src/commands/workspace/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.0.0/src/commands/workspace/list.ts)_
+_See code: [src/commands/workspace/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/workspace/list.ts)_
 <!-- commandsstop -->
