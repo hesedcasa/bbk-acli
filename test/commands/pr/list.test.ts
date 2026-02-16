@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -26,18 +27,21 @@ describe('pr:list', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pr/list.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         listPullRequests: listPullRequestsStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     PrList = imported.default
   })
 
   it('calls listPullRequests with correct args and outputs JSON', async () => {
-    const cmd = new PrList(['my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PrList(['my-ws', 'my-repo'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -51,10 +55,10 @@ describe('pr:list', () => {
   })
 
   it('passes optional flags correctly', async () => {
-    const cmd = new PrList(
-      ['my-repo', 'my-ws', '--state', 'OPEN', '--page', '2', '--pagelen', '25'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrList(['my-ws', 'my-repo', '--state', 'OPEN', '--page', '2', '--pagelen', '25'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -68,7 +72,10 @@ describe('pr:list', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new PrList(['my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PrList(['my-ws', 'my-repo'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -80,7 +87,10 @@ describe('pr:list', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const cmd = new PrList(['my-repo', 'my-ws', '--toon'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PrList(['my-ws', 'my-repo', '--toon'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logStub = sinon.stub(cmd, 'log')
 
     await cmd.run()

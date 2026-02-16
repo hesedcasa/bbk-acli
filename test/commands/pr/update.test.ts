@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -26,21 +27,21 @@ describe('pr:update', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pr/update.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         updatePullRequest: updatePullRequestStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     PrUpdate = imported.default
   })
 
   it('calls updatePullRequest with title flag and outputs JSON', async () => {
-    const cmd = new PrUpdate(
-      ['42', 'my-repo', 'my-ws', '--title', 'Updated title'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'Updated title'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -60,10 +61,10 @@ describe('pr:update', () => {
   })
 
   it('calls updatePullRequest with both title and description flags', async () => {
-    const cmd = new PrUpdate(
-      ['42', 'my-repo', 'my-ws', '--title', 'New title', '-d', 'New description'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'New title', '-d', 'New description'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -81,22 +82,16 @@ describe('pr:update', () => {
   })
 
   it('calls updatePullRequest with empty fields when no optional flags provided', async () => {
-    const cmd = new PrUpdate(
-      ['42', 'my-repo', 'my-ws'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrUpdate(['my-ws', 'my-repo', '42'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
 
     expect(updatePullRequestStub.calledOnce).to.be.true
-    expect(updatePullRequestStub.firstCall.args).to.deep.equal([
-      mockConfig.auth,
-      'my-ws',
-      'my-repo',
-      42,
-      {},
-    ])
+    expect(updatePullRequestStub.firstCall.args).to.deep.equal([mockConfig.auth, 'my-ws', 'my-repo', 42, {}])
     expect(clearClientsStub.calledOnce).to.be.true
     expect(logJsonStub.calledOnce).to.be.true
   })
@@ -104,10 +99,10 @@ describe('pr:update', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new PrUpdate(
-      ['42', 'my-repo', 'my-ws', '--title', 'Updated title'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'Updated title'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -119,10 +114,10 @@ describe('pr:update', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const cmd = new PrUpdate(
-      ['42', 'my-repo', 'my-ws', '--title', 'Updated title', '--toon'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrUpdate(['my-ws', 'my-repo', '42', '--title', 'Updated title', '--toon'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logStub = sinon.stub(cmd, 'log')
 
     await cmd.run()

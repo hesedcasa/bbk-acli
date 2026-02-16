@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -29,18 +30,18 @@ describe('workspace:list', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/workspace/list.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         listWorkspaces: listWorkspacesStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     WorkspaceList = imported.default
   })
 
   it('calls listWorkspaces with correct args and outputs JSON', async () => {
-    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any
+    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any
     const cmd = new WorkspaceList([], oclifConfig)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
@@ -57,7 +58,7 @@ describe('workspace:list', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any
+    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any
     const cmd = new WorkspaceList([], oclifConfig)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
@@ -70,7 +71,7 @@ describe('workspace:list', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any
+    const oclifConfig = {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any
     const cmd = new WorkspaceList(['--toon'], oclifConfig)
     const logStub = sinon.stub(cmd, 'log')
 

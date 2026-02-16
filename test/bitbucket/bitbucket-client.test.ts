@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -208,9 +209,8 @@ describe('bitbucket-client', () => {
   describe('createPullRequest', () => {
     it('delegates with all params', async () => {
       await createPullRequestFn(mockConfig, 'ws', 'repo', 'title', 'src', 'dst', 'desc', true, ['r1'])
-      expect(
-        mockApiInstance.createPullRequest.calledWith('ws', 'repo', 'title', 'src', 'dst', 'desc', true, ['r1']),
-      ).to.be.true
+      expect(mockApiInstance.createPullRequest.calledWith('ws', 'repo', 'title', 'src', 'dst', 'desc', true, ['r1'])).to
+        .be.true
     })
   })
 

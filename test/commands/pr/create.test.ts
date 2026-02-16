@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -26,21 +27,21 @@ describe('pr:create', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pr/create.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         createPullRequest: createPullRequestStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     PrCreate = imported.default
   })
 
   it('calls createPullRequest with correct args and outputs JSON', async () => {
-    const cmd = new PrCreate(
-      ['my-repo', 'my-ws', '--title', 'My PR', '--source', 'feature', '--destination', 'main'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrCreate(['my-ws', 'my-repo', '--title', 'My PR', '--source', 'feature', '--destination', 'main'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -55,8 +56,8 @@ describe('pr:create', () => {
       'feature',
       'main',
       undefined,
-      false,
       undefined,
+      true,
     ])
     expect(clearClientsStub.calledOnce).to.be.true
     expect(logJsonStub.calledOnce).to.be.true
@@ -66,21 +67,20 @@ describe('pr:create', () => {
   it('passes optional flags correctly', async () => {
     const cmd = new PrCreate(
       [
-        'my-repo',
         'my-ws',
+        'my-repo',
         '--title',
         'My PR',
         '--source',
         'feature',
         '--destination',
         'main',
-        '-d',
+        '--description',
         'A description',
-        '--close-source-branch',
         '--reviewers',
         'uuid1, uuid2, uuid3',
       ],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
+      {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any,
     )
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
@@ -95,8 +95,8 @@ describe('pr:create', () => {
       'feature',
       'main',
       'A description',
-      true,
       ['uuid1', 'uuid2', 'uuid3'],
+      true,
     ])
     expect(clearClientsStub.calledOnce).to.be.true
     expect(logJsonStub.calledOnce).to.be.true
@@ -105,10 +105,10 @@ describe('pr:create', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new PrCreate(
-      ['my-repo', 'my-ws', '--title', 'My PR', '--source', 'feature', '--destination', 'main'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
-    )
+    const cmd = new PrCreate(['my-ws', 'my-repo', '--title', 'My PR', '--source', 'feature', '--destination', 'main'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -121,8 +121,8 @@ describe('pr:create', () => {
 
   it('outputs TOON format when --toon flag is used', async () => {
     const cmd = new PrCreate(
-      ['my-repo', 'my-ws', '--title', 'My PR', '--source', 'feature', '--destination', 'main', '--toon'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
+      ['my-ws', 'my-repo', '--title', 'My PR', '--source', 'feature', '--destination', 'main', '--toon'],
+      {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any,
     )
     const logStub = sinon.stub(cmd, 'log')
 

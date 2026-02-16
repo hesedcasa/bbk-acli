@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -17,7 +18,8 @@ describe('repo:create', () => {
     },
   }
 
-  const mockResult = {data: {slug: 'my-repo', full_name: 'my-ws/my-repo'}, success: true}
+  // eslint-disable-next-line camelcase
+  const mockResult = {data: {full_name: 'my-ws/my-repo', slug: 'my-repo'}, success: true}
 
   beforeEach(async () => {
     readConfigStub = sinon.stub().resolves(mockConfig)
@@ -26,18 +28,21 @@ describe('repo:create', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/repo/create.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         createRepository: createRepositoryStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     RepoCreate = imported.default
   })
 
   it('calls createRepository with correct args and outputs JSON', async () => {
-    const cmd = new RepoCreate(['my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new RepoCreate(['my-ws', 'my-repo'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -58,7 +63,10 @@ describe('repo:create', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new RepoCreate(['my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new RepoCreate(['my-ws', 'my-repo'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -70,7 +78,10 @@ describe('repo:create', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const cmd = new RepoCreate(['my-repo', 'my-ws', '--toon'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new RepoCreate(['my-ws', 'my-repo', '--toon'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logStub = sinon.stub(cmd, 'log')
 
     await cmd.run()

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -17,7 +18,7 @@ describe('pipeline:get', () => {
     },
   }
 
-  const mockResult = {data: {uuid: '{pipe-uuid}', state: {name: 'COMPLETED'}}, success: true}
+  const mockResult = {data: {state: {name: 'COMPLETED'}, uuid: '{pipe-uuid}'}, success: true}
 
   beforeEach(async () => {
     readConfigStub = sinon.stub().resolves(mockConfig)
@@ -26,18 +27,21 @@ describe('pipeline:get', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pipeline/get.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         getPipeline: getPipelineStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     PipelineGet = imported.default
   })
 
   it('calls getPipeline with correct args and outputs JSON', async () => {
-    const cmd = new PipelineGet(['{pipe-uuid}', 'my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PipelineGet(['my-ws', 'my-repo', '{pipe-uuid}'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -53,7 +57,10 @@ describe('pipeline:get', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new PipelineGet(['{pipe-uuid}', 'my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PipelineGet(['my-ws', 'my-repo', '{pipe-uuid}'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -65,7 +72,10 @@ describe('pipeline:get', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const cmd = new PipelineGet(['{pipe-uuid}', 'my-repo', 'my-ws', '--toon'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PipelineGet(['my-ws', 'my-repo', '{pipe-uuid}', '--toon'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logStub = sinon.stub(cmd, 'log')
 
     await cmd.run()

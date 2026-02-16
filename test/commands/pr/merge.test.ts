@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -26,18 +27,21 @@ describe('pr:merge', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/pr/merge.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         mergePullRequest: mergePullRequestStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     PrMerge = imported.default
   })
 
   it('calls mergePullRequest with correct args and outputs JSON', async () => {
-    const cmd = new PrMerge(['42', 'my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PrMerge(['my-ws', 'my-repo', '42'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -60,8 +64,8 @@ describe('pr:merge', () => {
 
   it('passes optional flags correctly', async () => {
     const cmd = new PrMerge(
-      ['42', 'my-repo', 'my-ws', '--strategy', 'squash', '--close-source-branch', '-m', 'Squash merge'],
-      {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any,
+      ['my-ws', 'my-repo', '42', '--strategy', 'squash', '--close-source-branch', '-m', 'Squash merge'],
+      {root: process.cwd(), runHook: sinon.stub().resolves({failures: [], successes: []})} as any,
     )
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
@@ -84,7 +88,10 @@ describe('pr:merge', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new PrMerge(['42', 'my-repo', 'my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PrMerge(['my-ws', 'my-repo', '42'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -96,7 +103,10 @@ describe('pr:merge', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const cmd = new PrMerge(['42', 'my-repo', 'my-ws', '--toon'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new PrMerge(['my-ws', 'my-repo', '42', '--toon'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logStub = sinon.stub(cmd, 'log')
 
     await cmd.run()

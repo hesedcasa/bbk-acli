@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -42,7 +43,7 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'new-token', '-e', 'new@test.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     const logStub = sinon.stub(cmd, 'log')
 
@@ -67,7 +68,7 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     sinon.stub(cmd, 'log')
 
@@ -84,7 +85,7 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     const logStub = sinon.stub(cmd, 'log')
 
@@ -100,7 +101,7 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     const logStub = sinon.stub(cmd, 'log')
 
@@ -116,7 +117,7 @@ describe('auth:update', () => {
     const cmd = new AuthUpdate(['-t', 'bad', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     sinon.stub(cmd, 'log')
     const errorStub = sinon.stub(cmd, 'error')

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -39,7 +40,7 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'my-token', '-e', 'user@test.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     const logStub = sinon.stub(cmd, 'log')
 
@@ -65,7 +66,7 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     sinon.stub(cmd, 'log')
 
@@ -81,7 +82,7 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'bad', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     sinon.stub(cmd, 'log')
     const errorStub = sinon.stub(cmd, 'error')
@@ -98,7 +99,7 @@ describe('auth:add', () => {
     const cmd = new AuthAdd(['-t', 'tok', '-e', 'e@e.com'], {
       configDir: '/tmp/test-config',
       root: process.cwd(),
-      runHook: sinon.stub().resolves({successes: [], failures: []}),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
     } as any)
     sinon.stub(cmd, 'log')
 

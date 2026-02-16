@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {expect} from 'chai'
 import esmock from 'esmock'
 import sinon from 'sinon'
@@ -26,27 +27,28 @@ describe('repo:list', () => {
     formatAsToonStub = sinon.stub().returns('toon-output')
 
     const imported = await esmock('../../../src/commands/repo/list.js', {
-      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/bitbucket/bitbucket-client.js': {
         clearClients: clearClientsStub,
         listRepositories: listRepositoriesStub,
       },
+      '../../../src/config.js': {readConfig: readConfigStub},
       '../../../src/format.js': {formatAsToon: formatAsToonStub},
     })
     RepoList = imported.default
   })
 
   it('calls listRepositories with correct args and outputs JSON', async () => {
-    const cmd = new RepoList(['my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new RepoList(['my-ws'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
 
     expect(readConfigStub.calledOnce).to.be.true
     expect(listRepositoriesStub.calledOnce).to.be.true
-    expect(listRepositoriesStub.firstCall.args).to.deep.equal([
-      mockConfig.auth, 'my-ws', 1, 10, undefined, undefined,
-    ])
+    expect(listRepositoriesStub.firstCall.args).to.deep.equal([mockConfig.auth, 'my-ws', 1, 10, undefined, undefined])
     expect(clearClientsStub.calledOnce).to.be.true
     expect(logJsonStub.calledOnce).to.be.true
     expect(logJsonStub.firstCall.args[0]).to.deep.equal(mockResult)
@@ -55,7 +57,10 @@ describe('repo:list', () => {
   it('returns early when config is missing', async () => {
     readConfigStub.resolves(null)
 
-    const cmd = new RepoList(['my-ws'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new RepoList(['my-ws'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logJsonStub = sinon.stub(cmd, 'logJson')
 
     await cmd.run()
@@ -67,15 +72,16 @@ describe('repo:list', () => {
   })
 
   it('outputs TOON format when --toon flag is used', async () => {
-    const cmd = new RepoList(['my-ws', '--toon'], {root: process.cwd(), runHook: sinon.stub().resolves({successes: [], failures: []})} as any)
+    const cmd = new RepoList(['my-ws', '--toon'], {
+      root: process.cwd(),
+      runHook: sinon.stub().resolves({failures: [], successes: []}),
+    } as any)
     const logStub = sinon.stub(cmd, 'log')
 
     await cmd.run()
 
     expect(listRepositoriesStub.calledOnce).to.be.true
-    expect(listRepositoriesStub.firstCall.args).to.deep.equal([
-      mockConfig.auth, 'my-ws', 1, 10, undefined, undefined,
-    ])
+    expect(listRepositoriesStub.firstCall.args).to.deep.equal([mockConfig.auth, 'my-ws', 1, 10, undefined, undefined])
     expect(clearClientsStub.calledOnce).to.be.true
     expect(formatAsToonStub.calledOnce).to.be.true
     expect(formatAsToonStub.firstCall.args[0]).to.deep.equal(mockResult)

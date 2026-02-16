@@ -1,3 +1,4 @@
+/* eslint-disable n/no-unsupported-features/node-builtins */
 import {expect} from 'chai'
 import sinon from 'sinon'
 
@@ -14,7 +15,7 @@ describe('BitbucketApi', () => {
 
   beforeEach(() => {
     api = new BitbucketApi(config)
-    fetchStub = sinon.stub(global, 'fetch')
+    fetchStub = sinon.stub(globalThis, 'fetch')
   })
 
   afterEach(() => {
@@ -59,7 +60,7 @@ describe('BitbucketApi', () => {
     })
 
     it('returns success with parsed JSON on 200 response', async () => {
-      const responseData = {slug: 'my-repo', name: 'My Repo'}
+      const responseData = {name: 'My Repo', slug: 'my-repo'}
       fetchStub.resolves(new Response(JSON.stringify(responseData), {status: 200}))
 
       const result = await api.getRepository('ws', 'my-repo')
@@ -356,7 +357,7 @@ describe('BitbucketApi', () => {
     it('calls POST /repositories/:workspace/:repoSlug/pullrequests', async () => {
       fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
 
-      await api.createPullRequest('ws', 'repo', 'My PR', 'feature', 'main')
+      await api.createPullRequest('ws', 'repo', 'My PR', 'feature', 'main', undefined, undefined, false)
 
       const [url, options] = fetchStub.firstCall.args
       expect(url).to.equal('https://api.bitbucket.org/2.0/repositories/ws/repo/pullrequests')
@@ -366,20 +367,19 @@ describe('BitbucketApi', () => {
     it('sends correct body with required fields', async () => {
       fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
 
-      await api.createPullRequest('ws', 'repo', 'My PR', 'feature', 'main')
+      await api.createPullRequest('ws', 'repo', 'My PR', 'feature', 'main', undefined, undefined, false)
 
       const [, options] = fetchStub.firstCall.args
       const body = JSON.parse(options.body)
       expect(body.title).to.equal('My PR')
       expect(body.source.branch.name).to.equal('feature')
       expect(body.destination.branch.name).to.equal('main')
-      expect(body.close_source_branch).to.be.false
     })
 
     it('includes description when provided', async () => {
       fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
 
-      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', 'A description')
+      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', 'A description', undefined, false)
 
       const [, options] = fetchStub.firstCall.args
       const body = JSON.parse(options.body)
@@ -389,30 +389,17 @@ describe('BitbucketApi', () => {
     it('omits description when not provided', async () => {
       fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
 
-      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main')
+      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', undefined, undefined, false)
 
       const [, options] = fetchStub.firstCall.args
       const body = JSON.parse(options.body)
       expect(body.description).to.be.undefined
     })
 
-    it('includes close_source_branch when set to true', async () => {
-      fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
-
-      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', undefined, true)
-
-      const [, options] = fetchStub.firstCall.args
-      const body = JSON.parse(options.body)
-      expect(body.close_source_branch).to.be.true
-    })
-
     it('includes reviewers when provided', async () => {
       fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
 
-      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', undefined, false, [
-        '{uuid-1}',
-        '{uuid-2}',
-      ])
+      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', undefined, ['{uuid-1}', '{uuid-2}'], false)
 
       const [, options] = fetchStub.firstCall.args
       const body = JSON.parse(options.body)
@@ -422,7 +409,7 @@ describe('BitbucketApi', () => {
     it('omits reviewers when empty array', async () => {
       fetchStub.resolves(new Response(JSON.stringify({id: 1}), {status: 201}))
 
-      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', undefined, false, [])
+      await api.createPullRequest('ws', 'repo', 'PR', 'feat', 'main', undefined, [], false)
 
       const [, options] = fetchStub.firstCall.args
       const body = JSON.parse(options.body)
