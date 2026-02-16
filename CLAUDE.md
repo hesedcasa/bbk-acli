@@ -35,7 +35,12 @@ The project follows a layered architecture with clear separation of concerns:
 
 ```
 src/
-├── commands/         # Oclif CLI commands (user-facing)
+├── commands/bb/      # Oclif CLI commands, all namespaced under bb/
+│   ├── auth/        # auth add, test, update
+│   ├── pipeline/    # pipeline get, list, trigger
+│   ├── pr/          # pr approve, create, decline, get, list, merge, unapprove, update
+│   ├── repo/        # repo create, delete, get, list
+│   └── workspace/   # workspace get, list
 ├── bitbucket/       # Bitbucket REST API layer
 │   ├── bitbucket-api.ts     # BitbucketApi class with core API methods
 │   └── bitbucket-client.ts  # Wrapper functions with singleton pattern
@@ -47,7 +52,7 @@ src/
 
 **1. Three-Tier Command Pattern:**
 
-- **Commands** (`src/commands/`) - Thin Oclif command wrappers that parse args/flags
+- **Commands** (`src/commands/bb/`) - Thin Oclif command wrappers that parse args/flags
 - **Client Layer** (`bitbucket-client.ts`) - Functional wrappers with singleton pattern
 - **API Layer** (`bitbucket-api.ts`) - Core API class using native `fetch` for Bitbucket REST API v2
 
@@ -67,7 +72,7 @@ interface ApiResult {
 
 ## Adding a New Command
 
-1. Create command file in `src/commands/<category>/<name>.ts`
+1. Create command file in `src/commands/bb/<category>/<name>.ts`
 2. Extend `Command` from `@oclif/core`
 3. Define static `args`, `flags`, `description`, and `examples`
 4. In `run()` method:
@@ -77,19 +82,22 @@ interface ApiResult {
    - Call `clearClients()` for cleanup
    - Output with `this.logJson(result)` or `this.log(formatAsToon(result))`
 
-Example pattern from `src/commands/repo/get.ts`:
+Example pattern from `src/commands/bb/repo/get.ts`:
 
 ```typescript
 import {Args, Command, Flags} from '@oclif/core'
-import {readConfig} from '../../config.js'
-import {formatAsToon} from '../../format.js'
-import {clearClients, getRepository} from '../../bitbucket/bitbucket-client.js'
+
+import {clearClients, getRepository} from '../../../bitbucket/bitbucket-client.js'
+import {readConfig} from '../../../config.js'
+import {formatAsToon} from '../../../format.js'
 
 export default class RepoGet extends Command {
+  /* eslint-disable perfectionist/sort-objects */
   static override args = {
-    repoSlug: Args.string({description: 'Repository slug', required: true}),
     workspace: Args.string({description: 'Workspace slug or UUID', required: true}),
+    repoSlug: Args.string({description: 'Repository slug', required: true}),
   }
+  /* eslint-enable perfectionist/sort-objects */
   static override description = 'Get details of a specific repository'
   static override examples = ['<%= config.bin %> <%= command.id %> my-workspace my-repo']
   static override flags = {
@@ -99,7 +107,9 @@ export default class RepoGet extends Command {
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(RepoGet)
     const config = await readConfig(this.config.configDir, this.log.bind(this))
-    if (!config) return
+    if (!config) {
+      return
+    }
 
     const result = await getRepository(config.auth, args.workspace, args.repoSlug)
     clearClients()
@@ -134,7 +144,7 @@ Authentication config is stored in JSON at `~/.config/bbk-acli/config.json` (pla
 
 ## Testing
 
-- Tests mirror source structure in `test/` directory
+- Tests mirror source structure in `test/` directory (e.g. `test/commands/bb/repo/get.test.ts`)
 - Mocha + Chai for testing
 - `esmock` for module mocking, `sinon` for stub/spy/mock objects
 - Tests use `ts-node` for TypeScript execution (see `.mocharc.json`)
