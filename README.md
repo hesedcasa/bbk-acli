@@ -18,7 +18,7 @@ $ npm install -g bbk-acli
 $ bbk-acli COMMAND
 running command...
 $ bbk-acli (--version)
-bbk-acli/0.1.0 linux-x64 node-v20.20.0
+bbk-acli/0.1.1 linux-x64 node-v20.20.0
 $ bbk-acli --help [COMMAND]
 USAGE
   $ bbk-acli COMMAND
@@ -29,38 +29,38 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`bbk-acli auth add`](#bbk-acli-auth-add)
-* [`bbk-acli auth test`](#bbk-acli-auth-test)
-* [`bbk-acli auth update`](#bbk-acli-auth-update)
+* [`bbk-acli bb auth add`](#bbk-acli-bb-auth-add)
+* [`bbk-acli bb auth test`](#bbk-acli-bb-auth-test)
+* [`bbk-acli bb auth update`](#bbk-acli-bb-auth-update)
+* [`bbk-acli bb pipeline get WORKSPACE REPOSLUG PIPELINEUUID`](#bbk-acli-bb-pipeline-get-workspace-reposlug-pipelineuuid)
+* [`bbk-acli bb pipeline list WORKSPACE REPOSLUG`](#bbk-acli-bb-pipeline-list-workspace-reposlug)
+* [`bbk-acli bb pipeline trigger WORKSPACE REPOSLUG`](#bbk-acli-bb-pipeline-trigger-workspace-reposlug)
+* [`bbk-acli bb pr approve WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-bb-pr-approve-workspace-reposlug-pullrequestid)
+* [`bbk-acli bb pr create WORKSPACE REPOSLUG`](#bbk-acli-bb-pr-create-workspace-reposlug)
+* [`bbk-acli bb pr decline WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-bb-pr-decline-workspace-reposlug-pullrequestid)
+* [`bbk-acli bb pr get WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-bb-pr-get-workspace-reposlug-pullrequestid)
+* [`bbk-acli bb pr list WORKSPACE REPOSLUG`](#bbk-acli-bb-pr-list-workspace-reposlug)
+* [`bbk-acli bb pr merge WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-bb-pr-merge-workspace-reposlug-pullrequestid)
+* [`bbk-acli bb pr unapprove WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-bb-pr-unapprove-workspace-reposlug-pullrequestid)
+* [`bbk-acli bb pr update WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-bb-pr-update-workspace-reposlug-pullrequestid)
+* [`bbk-acli bb repo create WORKSPACE REPOSLUG`](#bbk-acli-bb-repo-create-workspace-reposlug)
+* [`bbk-acli bb repo delete WORKSPACE REPOSLUG`](#bbk-acli-bb-repo-delete-workspace-reposlug)
+* [`bbk-acli bb repo get WORKSPACE REPOSLUG`](#bbk-acli-bb-repo-get-workspace-reposlug)
+* [`bbk-acli bb repo list WORKSPACE`](#bbk-acli-bb-repo-list-workspace)
+* [`bbk-acli bb workspace get WORKSPACE`](#bbk-acli-bb-workspace-get-workspace)
+* [`bbk-acli bb workspace list`](#bbk-acli-bb-workspace-list)
 * [`bbk-acli commands`](#bbk-acli-commands)
 * [`bbk-acli help [COMMAND]`](#bbk-acli-help-command)
-* [`bbk-acli pipeline get WORKSPACE REPOSLUG PIPELINEUUID`](#bbk-acli-pipeline-get-workspace-reposlug-pipelineuuid)
-* [`bbk-acli pipeline list WORKSPACE REPOSLUG`](#bbk-acli-pipeline-list-workspace-reposlug)
-* [`bbk-acli pipeline trigger WORKSPACE REPOSLUG`](#bbk-acli-pipeline-trigger-workspace-reposlug)
-* [`bbk-acli pr approve WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-pr-approve-workspace-reposlug-pullrequestid)
-* [`bbk-acli pr create WORKSPACE REPOSLUG`](#bbk-acli-pr-create-workspace-reposlug)
-* [`bbk-acli pr decline WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-pr-decline-workspace-reposlug-pullrequestid)
-* [`bbk-acli pr get WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-pr-get-workspace-reposlug-pullrequestid)
-* [`bbk-acli pr list WORKSPACE REPOSLUG`](#bbk-acli-pr-list-workspace-reposlug)
-* [`bbk-acli pr merge WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-pr-merge-workspace-reposlug-pullrequestid)
-* [`bbk-acli pr unapprove WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-pr-unapprove-workspace-reposlug-pullrequestid)
-* [`bbk-acli pr update WORKSPACE REPOSLUG PULLREQUESTID`](#bbk-acli-pr-update-workspace-reposlug-pullrequestid)
-* [`bbk-acli repo create WORKSPACE REPOSLUG`](#bbk-acli-repo-create-workspace-reposlug)
-* [`bbk-acli repo delete WORKSPACE REPOSLUG`](#bbk-acli-repo-delete-workspace-reposlug)
-* [`bbk-acli repo get WORKSPACE REPOSLUG`](#bbk-acli-repo-get-workspace-reposlug)
-* [`bbk-acli repo list WORKSPACE`](#bbk-acli-repo-list-workspace)
 * [`bbk-acli update [CHANNEL]`](#bbk-acli-update-channel)
 * [`bbk-acli version`](#bbk-acli-version)
-* [`bbk-acli workspace get WORKSPACE`](#bbk-acli-workspace-get-workspace)
-* [`bbk-acli workspace list`](#bbk-acli-workspace-list)
 
-## `bbk-acli auth add`
+## `bbk-acli bb auth add`
 
 Add Atlassian authentication
 
 ```
 USAGE
-  $ bbk-acli auth add -e <value> -t <value> [--json]
+  $ bbk-acli bb auth add -e <value> -t <value> [--json]
 
 FLAGS
   -e, --email=<value>  (required) Account email:
@@ -73,18 +73,18 @@ DESCRIPTION
   Add Atlassian authentication
 
 EXAMPLES
-  $ bbk-acli auth add
+  $ bbk-acli bb auth add
 ```
 
-_See code: [src/commands/auth/add.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/auth/add.ts)_
+_See code: [src/commands/bb/auth/add.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/auth/add.ts)_
 
-## `bbk-acli auth test`
+## `bbk-acli bb auth test`
 
 Test authentication and connection
 
 ```
 USAGE
-  $ bbk-acli auth test [--json]
+  $ bbk-acli bb auth test [--json]
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -93,18 +93,18 @@ DESCRIPTION
   Test authentication and connection
 
 EXAMPLES
-  $ bbk-acli auth test
+  $ bbk-acli bb auth test
 ```
 
-_See code: [src/commands/auth/test.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/auth/test.ts)_
+_See code: [src/commands/bb/auth/test.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/auth/test.ts)_
 
-## `bbk-acli auth update`
+## `bbk-acli bb auth update`
 
 Update existing authentication
 
 ```
 USAGE
-  $ bbk-acli auth update -e <value> -t <value> [--json]
+  $ bbk-acli bb auth update -e <value> -t <value> [--json]
 
 FLAGS
   -e, --email=<value>  (required) Account email
@@ -117,10 +117,455 @@ DESCRIPTION
   Update existing authentication
 
 EXAMPLES
-  $ bbk-acli auth update
+  $ bbk-acli bb auth update
 ```
 
-_See code: [src/commands/auth/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/auth/update.ts)_
+_See code: [src/commands/bb/auth/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/auth/update.ts)_
+
+## `bbk-acli bb pipeline get WORKSPACE REPOSLUG PIPELINEUUID`
+
+Get details of a specific pipeline
+
+```
+USAGE
+  $ bbk-acli bb pipeline get WORKSPACE REPOSLUG PIPELINEUUID [--toon]
+
+ARGUMENTS
+  WORKSPACE     Workspace slug or UUID
+  REPOSLUG      Repository slug
+  PIPELINEUUID  Pipeline UUID
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Get details of a specific pipeline
+
+EXAMPLES
+  $ bbk-acli bb pipeline get my-workspace my-repo {uuid}
+```
+
+_See code: [src/commands/bb/pipeline/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pipeline/get.ts)_
+
+## `bbk-acli bb pipeline list WORKSPACE REPOSLUG`
+
+List pipelines for a repository
+
+```
+USAGE
+  $ bbk-acli bb pipeline list WORKSPACE REPOSLUG [--page <value>] [--pagelen <value>] [--sort <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --page=<value>     [default: 1] Page number
+  --pagelen=<value>  [default: 10] Number of items per page
+  --sort=<value>     Sort field (e.g., created_on)
+  --toon             Format output as toon
+
+DESCRIPTION
+  List pipelines for a repository
+
+EXAMPLES
+  $ bbk-acli bb pipeline list my-workspace my-repo
+```
+
+_See code: [src/commands/bb/pipeline/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pipeline/list.ts)_
+
+## `bbk-acli bb pipeline trigger WORKSPACE REPOSLUG`
+
+Trigger a pipeline run
+
+```
+USAGE
+  $ bbk-acli bb pipeline trigger WORKSPACE REPOSLUG --branch <value> [--custom <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --branch=<value>  (required) Branch name to run pipeline on
+  --custom=<value>  Custom pipeline pattern name
+  --toon            Format output as toon
+
+DESCRIPTION
+  Trigger a pipeline run
+
+EXAMPLES
+  $ bbk-acli bb pipeline trigger my-workspace my-repo --branch main
+
+  $ bbk-acli bb pipeline trigger my-workspace my-repo --branch main --custom my-pipeline
+```
+
+_See code: [src/commands/bb/pipeline/trigger.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pipeline/trigger.ts)_
+
+## `bbk-acli bb pr approve WORKSPACE REPOSLUG PULLREQUESTID`
+
+Approve a pull request
+
+```
+USAGE
+  $ bbk-acli bb pr approve WORKSPACE REPOSLUG PULLREQUESTID [--toon]
+
+ARGUMENTS
+  WORKSPACE      Workspace slug or UUID
+  REPOSLUG       Repository slug
+  PULLREQUESTID  Pull request ID
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Approve a pull request
+
+EXAMPLES
+  $ bbk-acli bb pr approve my-workspace my-repo 123
+```
+
+_See code: [src/commands/bb/pr/approve.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/approve.ts)_
+
+## `bbk-acli bb pr create WORKSPACE REPOSLUG`
+
+Create a new pull request
+
+```
+USAGE
+  $ bbk-acli bb pr create WORKSPACE REPOSLUG --destination <value> --source <value> --title <value> [--description
+    <value>] [--reviewers <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --description=<value>  Pull request description
+  --destination=<value>  (required) Destination branch name
+  --reviewers=<value>    Comma-separated list of reviewer UUIDs
+  --source=<value>       (required) Source branch name
+  --title=<value>        (required) Pull request title
+  --toon                 Format output as toon
+
+DESCRIPTION
+  Create a new pull request
+
+EXAMPLES
+  $ bbk-acli bb pr create my-workspace my-repo --title "My PR" --source feature-branch --destination main
+```
+
+_See code: [src/commands/bb/pr/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/create.ts)_
+
+## `bbk-acli bb pr decline WORKSPACE REPOSLUG PULLREQUESTID`
+
+Decline a pull request
+
+```
+USAGE
+  $ bbk-acli bb pr decline WORKSPACE REPOSLUG PULLREQUESTID [--toon]
+
+ARGUMENTS
+  WORKSPACE      Workspace slug or UUID
+  REPOSLUG       Repository slug
+  PULLREQUESTID  Pull request ID
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Decline a pull request
+
+EXAMPLES
+  $ bbk-acli bb pr decline my-workspace my-repo 123
+```
+
+_See code: [src/commands/bb/pr/decline.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/decline.ts)_
+
+## `bbk-acli bb pr get WORKSPACE REPOSLUG PULLREQUESTID`
+
+Get details of a specific pull request
+
+```
+USAGE
+  $ bbk-acli bb pr get WORKSPACE REPOSLUG PULLREQUESTID [--toon]
+
+ARGUMENTS
+  WORKSPACE      Workspace slug or UUID
+  REPOSLUG       Repository slug
+  PULLREQUESTID  Pull request ID
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Get details of a specific pull request
+
+EXAMPLES
+  $ bbk-acli bb pr get my-workspace my-repo 123
+```
+
+_See code: [src/commands/bb/pr/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/get.ts)_
+
+## `bbk-acli bb pr list WORKSPACE REPOSLUG`
+
+List pull requests for a repository
+
+```
+USAGE
+  $ bbk-acli bb pr list WORKSPACE REPOSLUG [--page <value>] [--pagelen <value>] [--state <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --page=<value>     [default: 1] Page number
+  --pagelen=<value>  [default: 10] Number of items per page
+  --state=<value>    Filter by state (OPEN, MERGED, DECLINED, SUPERSEDED)
+  --toon             Format output as toon
+
+DESCRIPTION
+  List pull requests for a repository
+
+EXAMPLES
+  $ bbk-acli bb pr list my-workspace my-repo
+```
+
+_See code: [src/commands/bb/pr/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/list.ts)_
+
+## `bbk-acli bb pr merge WORKSPACE REPOSLUG PULLREQUESTID`
+
+Merge a pull request
+
+```
+USAGE
+  $ bbk-acli bb pr merge WORKSPACE REPOSLUG PULLREQUESTID [--close-source-branch] [-m <value>] [--strategy
+    merge_commit|squash|fast_forward] [--toon]
+
+ARGUMENTS
+  WORKSPACE      Workspace slug or UUID
+  REPOSLUG       Repository slug
+  PULLREQUESTID  Pull request ID
+
+FLAGS
+  -m, --message=<value>      Merge commit message
+      --close-source-branch  Close source branch after merge
+      --strategy=<option>    Merge strategy (merge_commit, squash, fast_forward)
+                             <options: merge_commit|squash|fast_forward>
+      --toon                 Format output as toon
+
+DESCRIPTION
+  Merge a pull request
+
+EXAMPLES
+  $ bbk-acli bb pr merge my-workspace my-repo 123
+```
+
+_See code: [src/commands/bb/pr/merge.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/merge.ts)_
+
+## `bbk-acli bb pr unapprove WORKSPACE REPOSLUG PULLREQUESTID`
+
+Remove approval from a pull request
+
+```
+USAGE
+  $ bbk-acli bb pr unapprove WORKSPACE REPOSLUG PULLREQUESTID [--toon]
+
+ARGUMENTS
+  WORKSPACE      Workspace slug or UUID
+  REPOSLUG       Repository slug
+  PULLREQUESTID  Pull request ID
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Remove approval from a pull request
+
+EXAMPLES
+  $ bbk-acli bb pr unapprove my-workspace my-repo 123
+```
+
+_See code: [src/commands/bb/pr/unapprove.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/unapprove.ts)_
+
+## `bbk-acli bb pr update WORKSPACE REPOSLUG PULLREQUESTID`
+
+Update a pull request
+
+```
+USAGE
+  $ bbk-acli bb pr update WORKSPACE REPOSLUG PULLREQUESTID [--description <value>] [--title <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE      Workspace slug or UUID
+  REPOSLUG       Repository slug
+  PULLREQUESTID  Pull request ID
+
+FLAGS
+  --description=<value>  Pull request description
+  --title=<value>        Pull request title
+  --toon                 Format output as toon
+
+DESCRIPTION
+  Update a pull request
+
+EXAMPLES
+  $ bbk-acli bb pr update my-workspace my-repo 1 --title "Updated title"
+```
+
+_See code: [src/commands/bb/pr/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/pr/update.ts)_
+
+## `bbk-acli bb repo create WORKSPACE REPOSLUG`
+
+Create a new repository
+
+```
+USAGE
+  $ bbk-acli bb repo create WORKSPACE REPOSLUG [--description <value>] [--language <value>] [--private]
+    [--project-key <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --description=<value>  Repository description
+  --language=<value>     Repository language
+  --private              Make repository private
+  --project-key=<value>  Project key
+  --toon                 Format output as toon
+
+DESCRIPTION
+  Create a new repository
+
+EXAMPLES
+  $ bbk-acli bb repo create my-workspace my-repo
+
+  $ bbk-acli bb repo create my-workspace my-repo --private --description "My new repo"
+```
+
+_See code: [src/commands/bb/repo/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/repo/create.ts)_
+
+## `bbk-acli bb repo delete WORKSPACE REPOSLUG`
+
+Delete a repository
+
+```
+USAGE
+  $ bbk-acli bb repo delete WORKSPACE REPOSLUG [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Delete a repository
+
+EXAMPLES
+  $ bbk-acli bb repo delete my-workspace my-repo
+```
+
+_See code: [src/commands/bb/repo/delete.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/repo/delete.ts)_
+
+## `bbk-acli bb repo get WORKSPACE REPOSLUG`
+
+Get details of a specific repository
+
+```
+USAGE
+  $ bbk-acli bb repo get WORKSPACE REPOSLUG [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+  REPOSLUG   Repository slug
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Get details of a specific repository
+
+EXAMPLES
+  $ bbk-acli bb repo get my-workspace my-repo
+```
+
+_See code: [src/commands/bb/repo/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/repo/get.ts)_
+
+## `bbk-acli bb repo list WORKSPACE`
+
+List repositories in a workspace
+
+```
+USAGE
+  $ bbk-acli bb repo list WORKSPACE [--page <value>] [--pagelen <value>] [--q <value>] [--role <value>] [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+
+FLAGS
+  --page=<value>     [default: 1] Page number
+  --pagelen=<value>  [default: 10] Number of items per page
+  --q=<value>        Query string to filter repositories
+  --role=<value>     Filter by role (admin, contributor, member, owner)
+  --toon             Format output as toon
+
+DESCRIPTION
+  List repositories in a workspace
+
+EXAMPLES
+  $ bbk-acli bb repo list my-workspace
+```
+
+_See code: [src/commands/bb/repo/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/repo/list.ts)_
+
+## `bbk-acli bb workspace get WORKSPACE`
+
+Get details of a specific workspace
+
+```
+USAGE
+  $ bbk-acli bb workspace get WORKSPACE [--toon]
+
+ARGUMENTS
+  WORKSPACE  Workspace slug or UUID
+
+FLAGS
+  --toon  Format output as toon
+
+DESCRIPTION
+  Get details of a specific workspace
+
+EXAMPLES
+  $ bbk-acli bb workspace get my-workspace
+```
+
+_See code: [src/commands/bb/workspace/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/workspace/get.ts)_
+
+## `bbk-acli bb workspace list`
+
+List all accessible workspaces
+
+```
+USAGE
+  $ bbk-acli bb workspace list [--page <value>] [--pagelen <value>] [--toon]
+
+FLAGS
+  --page=<value>     [default: 1] Page number
+  --pagelen=<value>  [default: 10] Number of items per page
+  --toon             Format output as toon
+
+DESCRIPTION
+  List all accessible workspaces
+
+EXAMPLES
+  $ bbk-acli bb workspace list
+```
+
+_See code: [src/commands/bb/workspace/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.1/src/commands/bb/workspace/list.ts)_
 
 ## `bbk-acli commands`
 
@@ -170,406 +615,6 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.37/src/commands/help.ts)_
-
-## `bbk-acli pipeline get WORKSPACE REPOSLUG PIPELINEUUID`
-
-Get details of a specific pipeline
-
-```
-USAGE
-  $ bbk-acli pipeline get WORKSPACE REPOSLUG PIPELINEUUID [--toon]
-
-ARGUMENTS
-  WORKSPACE     Workspace slug or UUID
-  REPOSLUG      Repository slug
-  PIPELINEUUID  Pipeline UUID
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Get details of a specific pipeline
-
-EXAMPLES
-  $ bbk-acli pipeline get my-workspace my-repo {uuid}
-```
-
-_See code: [src/commands/pipeline/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pipeline/get.ts)_
-
-## `bbk-acli pipeline list WORKSPACE REPOSLUG`
-
-List pipelines for a repository
-
-```
-USAGE
-  $ bbk-acli pipeline list WORKSPACE REPOSLUG [--page <value>] [--pagelen <value>] [--sort <value>] [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  --page=<value>     [default: 1] Page number
-  --pagelen=<value>  [default: 10] Number of items per page
-  --sort=<value>     Sort field (e.g., created_on)
-  --toon             Format output as toon
-
-DESCRIPTION
-  List pipelines for a repository
-
-EXAMPLES
-  $ bbk-acli pipeline list my-workspace my-repo
-```
-
-_See code: [src/commands/pipeline/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pipeline/list.ts)_
-
-## `bbk-acli pipeline trigger WORKSPACE REPOSLUG`
-
-Trigger a pipeline run
-
-```
-USAGE
-  $ bbk-acli pipeline trigger WORKSPACE REPOSLUG --branch <value> [--custom <value>] [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  --branch=<value>  (required) Branch name to run pipeline on
-  --custom=<value>  Custom pipeline pattern name
-  --toon            Format output as toon
-
-DESCRIPTION
-  Trigger a pipeline run
-
-EXAMPLES
-  $ bbk-acli pipeline trigger my-workspace my-repo --branch main
-
-  $ bbk-acli pipeline trigger my-workspace my-repo --branch main --custom my-pipeline
-```
-
-_See code: [src/commands/pipeline/trigger.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pipeline/trigger.ts)_
-
-## `bbk-acli pr approve WORKSPACE REPOSLUG PULLREQUESTID`
-
-Approve a pull request
-
-```
-USAGE
-  $ bbk-acli pr approve WORKSPACE REPOSLUG PULLREQUESTID [--toon]
-
-ARGUMENTS
-  WORKSPACE      Workspace slug or UUID
-  REPOSLUG       Repository slug
-  PULLREQUESTID  Pull request ID
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Approve a pull request
-
-EXAMPLES
-  $ bbk-acli pr approve my-workspace my-repo 123
-```
-
-_See code: [src/commands/pr/approve.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/approve.ts)_
-
-## `bbk-acli pr create WORKSPACE REPOSLUG`
-
-Create a new pull request
-
-```
-USAGE
-  $ bbk-acli pr create WORKSPACE REPOSLUG --destination <value> --source <value> --title <value> [--description
-    <value>] [--reviewers <value>] [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  --description=<value>  Pull request description
-  --destination=<value>  (required) Destination branch name
-  --reviewers=<value>    Comma-separated list of reviewer UUIDs
-  --source=<value>       (required) Source branch name
-  --title=<value>        (required) Pull request title
-  --toon                 Format output as toon
-
-DESCRIPTION
-  Create a new pull request
-
-EXAMPLES
-  $ bbk-acli pr create my-workspace my-repo --title "My PR" --source feature-branch --destination main
-```
-
-_See code: [src/commands/pr/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/create.ts)_
-
-## `bbk-acli pr decline WORKSPACE REPOSLUG PULLREQUESTID`
-
-Decline a pull request
-
-```
-USAGE
-  $ bbk-acli pr decline WORKSPACE REPOSLUG PULLREQUESTID [--toon]
-
-ARGUMENTS
-  WORKSPACE      Workspace slug or UUID
-  REPOSLUG       Repository slug
-  PULLREQUESTID  Pull request ID
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Decline a pull request
-
-EXAMPLES
-  $ bbk-acli pr decline my-workspace my-repo 123
-```
-
-_See code: [src/commands/pr/decline.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/decline.ts)_
-
-## `bbk-acli pr get WORKSPACE REPOSLUG PULLREQUESTID`
-
-Get details of a specific pull request
-
-```
-USAGE
-  $ bbk-acli pr get WORKSPACE REPOSLUG PULLREQUESTID [--toon]
-
-ARGUMENTS
-  WORKSPACE      Workspace slug or UUID
-  REPOSLUG       Repository slug
-  PULLREQUESTID  Pull request ID
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Get details of a specific pull request
-
-EXAMPLES
-  $ bbk-acli pr get my-workspace my-repo 123
-```
-
-_See code: [src/commands/pr/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/get.ts)_
-
-## `bbk-acli pr list WORKSPACE REPOSLUG`
-
-List pull requests for a repository
-
-```
-USAGE
-  $ bbk-acli pr list WORKSPACE REPOSLUG [--page <value>] [--pagelen <value>] [--state <value>] [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  --page=<value>     [default: 1] Page number
-  --pagelen=<value>  [default: 10] Number of items per page
-  --state=<value>    Filter by state (OPEN, MERGED, DECLINED, SUPERSEDED)
-  --toon             Format output as toon
-
-DESCRIPTION
-  List pull requests for a repository
-
-EXAMPLES
-  $ bbk-acli pr list my-workspace my-repo
-```
-
-_See code: [src/commands/pr/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/list.ts)_
-
-## `bbk-acli pr merge WORKSPACE REPOSLUG PULLREQUESTID`
-
-Merge a pull request
-
-```
-USAGE
-  $ bbk-acli pr merge WORKSPACE REPOSLUG PULLREQUESTID [--close-source-branch] [-m <value>] [--strategy
-    merge_commit|squash|fast_forward] [--toon]
-
-ARGUMENTS
-  WORKSPACE      Workspace slug or UUID
-  REPOSLUG       Repository slug
-  PULLREQUESTID  Pull request ID
-
-FLAGS
-  -m, --message=<value>      Merge commit message
-      --close-source-branch  Close source branch after merge
-      --strategy=<option>    Merge strategy (merge_commit, squash, fast_forward)
-                             <options: merge_commit|squash|fast_forward>
-      --toon                 Format output as toon
-
-DESCRIPTION
-  Merge a pull request
-
-EXAMPLES
-  $ bbk-acli pr merge my-workspace my-repo 123
-```
-
-_See code: [src/commands/pr/merge.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/merge.ts)_
-
-## `bbk-acli pr unapprove WORKSPACE REPOSLUG PULLREQUESTID`
-
-Remove approval from a pull request
-
-```
-USAGE
-  $ bbk-acli pr unapprove WORKSPACE REPOSLUG PULLREQUESTID [--toon]
-
-ARGUMENTS
-  WORKSPACE      Workspace slug or UUID
-  REPOSLUG       Repository slug
-  PULLREQUESTID  Pull request ID
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Remove approval from a pull request
-
-EXAMPLES
-  $ bbk-acli pr unapprove my-workspace my-repo 123
-```
-
-_See code: [src/commands/pr/unapprove.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/unapprove.ts)_
-
-## `bbk-acli pr update WORKSPACE REPOSLUG PULLREQUESTID`
-
-Update a pull request
-
-```
-USAGE
-  $ bbk-acli pr update WORKSPACE REPOSLUG PULLREQUESTID [-d <value>] [--title <value>] [--toon]
-
-ARGUMENTS
-  WORKSPACE      Workspace slug or UUID
-  REPOSLUG       Repository slug
-  PULLREQUESTID  Pull request ID
-
-FLAGS
-  -d, --description=<value>  Pull request description
-      --title=<value>        Pull request title
-      --toon                 Format output as toon
-
-DESCRIPTION
-  Update a pull request
-
-EXAMPLES
-  $ bbk-acli pr update my-workspace my-repo 1 --title "Updated title"
-```
-
-_See code: [src/commands/pr/update.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/pr/update.ts)_
-
-## `bbk-acli repo create WORKSPACE REPOSLUG`
-
-Create a new repository
-
-```
-USAGE
-  $ bbk-acli repo create WORKSPACE REPOSLUG [-d <value>] [--language <value>] [--private] [--project-key <value>]
-    [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  -d, --description=<value>  Repository description
-      --language=<value>     Repository language
-      --private              Make repository private
-      --project-key=<value>  Project key
-      --toon                 Format output as toon
-
-DESCRIPTION
-  Create a new repository
-
-EXAMPLES
-  $ bbk-acli repo create my-workspace my-repo
-
-  $ bbk-acli repo create my-workspace my-repo --private --description "My new repo"
-```
-
-_See code: [src/commands/repo/create.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/create.ts)_
-
-## `bbk-acli repo delete WORKSPACE REPOSLUG`
-
-Delete a repository
-
-```
-USAGE
-  $ bbk-acli repo delete WORKSPACE REPOSLUG [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Delete a repository
-
-EXAMPLES
-  $ bbk-acli repo delete my-workspace my-repo
-```
-
-_See code: [src/commands/repo/delete.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/delete.ts)_
-
-## `bbk-acli repo get WORKSPACE REPOSLUG`
-
-Get details of a specific repository
-
-```
-USAGE
-  $ bbk-acli repo get WORKSPACE REPOSLUG [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-  REPOSLUG   Repository slug
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Get details of a specific repository
-
-EXAMPLES
-  $ bbk-acli repo get my-workspace my-repo
-```
-
-_See code: [src/commands/repo/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/get.ts)_
-
-## `bbk-acli repo list WORKSPACE`
-
-List repositories in a workspace
-
-```
-USAGE
-  $ bbk-acli repo list WORKSPACE [--page <value>] [--pagelen <value>] [--q <value>] [--role <value>] [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-
-FLAGS
-  --page=<value>     [default: 1] Page number
-  --pagelen=<value>  [default: 10] Number of items per page
-  --q=<value>        Query string to filter repositories
-  --role=<value>     Filter by role (admin, contributor, member, owner)
-  --toon             Format output as toon
-
-DESCRIPTION
-  List repositories in a workspace
-
-EXAMPLES
-  $ bbk-acli repo list my-workspace
-```
-
-_See code: [src/commands/repo/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/repo/list.ts)_
 
 ## `bbk-acli update [CHANNEL]`
 
@@ -628,49 +673,4 @@ FLAG DESCRIPTIONS
 ```
 
 _See code: [@oclif/plugin-version](https://github.com/oclif/plugin-version/blob/v2.2.36/src/commands/version.ts)_
-
-## `bbk-acli workspace get WORKSPACE`
-
-Get details of a specific workspace
-
-```
-USAGE
-  $ bbk-acli workspace get WORKSPACE [--toon]
-
-ARGUMENTS
-  WORKSPACE  Workspace slug or UUID
-
-FLAGS
-  --toon  Format output as toon
-
-DESCRIPTION
-  Get details of a specific workspace
-
-EXAMPLES
-  $ bbk-acli workspace get my-workspace
-```
-
-_See code: [src/commands/workspace/get.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/workspace/get.ts)_
-
-## `bbk-acli workspace list`
-
-List all accessible workspaces
-
-```
-USAGE
-  $ bbk-acli workspace list [--page <value>] [--pagelen <value>] [--toon]
-
-FLAGS
-  --page=<value>     [default: 1] Page number
-  --pagelen=<value>  [default: 10] Number of items per page
-  --toon             Format output as toon
-
-DESCRIPTION
-  List all accessible workspaces
-
-EXAMPLES
-  $ bbk-acli workspace list
-```
-
-_See code: [src/commands/workspace/list.ts](https://github.com/hesedcasa/bbk-acli/blob/v0.1.0/src/commands/workspace/list.ts)_
 <!-- commandsstop -->
