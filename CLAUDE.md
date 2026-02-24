@@ -131,7 +131,7 @@ export default class RepoGet extends Command {
 
 ## Configuration
 
-Authentication config is stored in JSON at `~/.config/bbk-acli/config.json` (platform-dependent):
+Authentication config is stored in JSON at `~/.config/bbk-acli/bb-config.json` (platform-dependent):
 
 ```json
 {
