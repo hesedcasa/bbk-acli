@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/hesedcasa/bbk-acli/compare/v0.1.1...v0.1.2) (2026-02-24)
+
+
+### 🛠️ Fixes
+
+* rename config file from config.json to bb-config.json ([#13](https://github.com/hesedcasa/bbk-acli/issues/13)) ([cee63c7](https://github.com/hesedcasa/bbk-acli/commit/cee63c72a8213e1eb28bb93ffe1654511250b1de))
+
 ## [0.1.1](https://github.com/hesedcasa/bbk-acli/compare/v0.1.0...v0.1.1) (2026-02-16)
 
 
