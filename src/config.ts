@@ -12,7 +12,7 @@ interface Config {
 }
 
 export async function readConfig(configDir: string, log: (message: string) => void): Promise<Config | undefined> {
-  const configPath = path.join(configDir, 'config.json')
+  const configPath = path.join(configDir, 'bb-config.json')
 
   try {
     return await fs.readJSON(configPath)

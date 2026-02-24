@@ -6,7 +6,7 @@ import {readConfig} from '../src/config.js'
 
 describe('config', () => {
   const testConfigDir = path.join(process.cwd(), 'test-config')
-  const testConfigPath = path.join(testConfigDir, 'config.json')
+  const testConfigPath = path.join(testConfigDir, 'bb-config.json')
 
   // Setup and teardown
   beforeEach(async () => {

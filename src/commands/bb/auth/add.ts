@@ -22,7 +22,7 @@ export default class AuthAdd extends Command {
 
     const apiToken = flags.token ?? (await input({message: 'API Token:', required: true}))
     const email = flags.email ?? (await input({message: 'Account email:', required: true}))
-    const configPath = path.join(this.config.configDir, 'config.json')
+    const configPath = path.join(this.config.configDir, 'bb-config.json')
     const auth = {
       auth: {
         apiToken,
