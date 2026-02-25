@@ -29,7 +29,8 @@ export default class PrUpdate extends Command {
 
     const fields: Record<string, unknown> = {}
     if (flags.title) fields.title = flags.title
-    if (flags.description) fields.description = flags.description
+    // eslint-disable-next-line unicorn/prefer-string-replace-all
+    if (flags.description) fields.description = flags.description.replace(/\\n/g, '\n').replace(/\\r/g, '\r')
 
     const result = await updatePullRequest(config.auth, args.workspace, args.repoSlug, args.pullRequestId, fields)
     clearClients()
