@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/hesedcasa/bbk-acli/compare/v0.1.2...v0.1.3) (2026-02-25)
+
+
+### 🛠️ Fixes
+
+* unescape newline sequences in PR description fields ([#15](https://github.com/hesedcasa/bbk-acli/issues/15)) ([fb14c09](https://github.com/hesedcasa/bbk-acli/commit/fb14c092209a32e58ded3c1fa3c7686541862f0a))
+
 ## [0.1.2](https://github.com/hesedcasa/bbk-acli/compare/v0.1.1...v0.1.2) (2026-02-24)
 
 
